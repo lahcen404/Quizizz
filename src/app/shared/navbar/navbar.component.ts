@@ -8,9 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  isMenuExpanded = false;
 
-  toggleMenu() {
-    this.isMenuExpanded = !this.isMenuExpanded;
-  }
 }
