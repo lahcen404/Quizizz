@@ -1,27 +1,62 @@
-# Quizizz
+# ENAA-Quizizz 🎯  
+An interactive web quiz application built with **Angular**, using questions from the **Open Trivia DB API**. This project was developed as a practical exercise to master HTTP calls, state management with RxJS, and modern front-end development best practices.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.15.
+---
 
-## Development server
+## 🚀 Project Background
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+As a freelance developer passionate about dynamic web apps, this project was crafted to simulate a real-world quiz platform. Users can browse categories, answer time-bound questions, track their scores, and challenge themselves again and again!
 
-## Code scaffolding
+---
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 🎮 Features (User Stories)
 
-## Build
+### As a user, I can:
+- 🏠 Access a **home page** showing available quiz categories.
+- 🎯 Select a **category** and **difficulty level**, then start a quiz.
+- ✅ Answer questions **one by one** with **instant validation**.
+- 🧠 View my **final score**, save it with a username in **local storage**, and replay the quiz.
+- 📈 Access a **score history** saved locally.
+- ⏱️ **Timed Mode**: Each question has a countdown timer to add more challenge.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+---
 
-## Running unit tests
+## 🗂️ App Structure
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+| Section | Description |
+|--------|-------------|
+| **Navbar** | Links to Home, History, and Settings |
+| **Home** | Select category & difficulty, then Start Quiz |
+| **Quiz** | Shows questions, score counter, and progress |
+| **Result** | Final score, feedback, and Play Again button |
+| **History** | Displays table of previous scores from local storage |
 
-## Running end-to-end tests
+---
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## 🛠️ Technologies Used
 
-## Further help
+- **Framework**: Angular 16+
+- **Languages**: TypeScript, HTML, CSS
+- **UI Framework**: Tailwind CSS / Bootstrap
+- **State Management**: RxJS
+- **External API**: [Open Trivia DB](https://opentdb.com/)
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+---
+
+## 📦 Setup & Run
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/enaa-quizizz.git
+
+# Navigate to the project directory
+cd enaa-quizizz
+
+# Install dependencies
+npm install
+
+# Run the development server
+ng serve
+
+# Open in browser
+http://localhost:4200
