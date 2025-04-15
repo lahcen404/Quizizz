@@ -35,9 +35,9 @@ As a freelance developer passionate about dynamic web apps, this project was cra
 
 ## 🛠️ Technologies Used
 
-- **Framework**: Angular 16+
+- **Framework**: Angular 17
 - **Languages**: TypeScript, HTML, CSS
-- **UI Framework**: Tailwind CSS / Bootstrap
+- **UI Framework**: Tailwind CSS 
 - **State Management**: RxJS
 - **External API**: [Open Trivia DB](https://opentdb.com/)
 
