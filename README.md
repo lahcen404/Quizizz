@@ -1,4 +1,4 @@
-# ENAA-Quizizz 🎯  
+# Quizizz 🎯  
 An interactive web quiz application built with **Angular**, using questions from the **Open Trivia DB API**. This project was developed as a practical exercise to master HTTP calls, state management with RxJS, and modern front-end development best practices.
 
 ---
@@ -47,7 +47,7 @@ As a freelance developer passionate about dynamic web apps, this project was cra
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/enaa-quizizz.git
+git clone https://github.com/lahcen404/Quizizz
 
 # Navigate to the project directory
 cd enaa-quizizz

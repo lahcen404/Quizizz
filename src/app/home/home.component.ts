@@ -49,6 +49,7 @@ export class HomeComponent implements OnInit {
       next: (res) => {
         console.log('api url:', url);
         console.log('quiiz Data:', res);
+        console.log('res.results:', res.results);
         this.quizData = res.results;
       },
       error: (err) => {
@@ -56,4 +57,8 @@ export class HomeComponent implements OnInit {
       }
     });
   }
+
+
+
+  
 }
