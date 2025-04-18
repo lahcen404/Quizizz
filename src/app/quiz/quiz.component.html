@@ -1,1 +1,43 @@
-<p>quiz works!</p>
+<div class="container mx-auto px-4 py-6">
+  <div class="w-full max-w-md mx-auto space-y-8 transform hover:scale-102 transition-all duration-300 bg-white/70 shadow-md rounded-lg p-6">
+    <!-- Show a loading message if questions haven't loaded yet -->
+    <div *ngIf="questions.length === 0" class="text-center text-gray-500">
+      Loading questions...
+    </div>
+
+    <!-- Show the current question -->
+    <div *ngIf="questions.length > 0 && currentQuestionIndex < questions.length">
+      <div class="flex justify-between items-center mb-4">
+        <div class="text-sm font-medium text-gray-700">
+          Question {{ currentQuestionIndex + 1 }} of {{ questions.length }}
+        </div>
+        <div class="text-sm font-medium text-gray-700">
+          Score: {{ score }}
+        </div>
+        <!-- Show the timer if timed mode is on -->
+        <div *ngIf="timedMode" class="text-sm font-medium text-red-500">
+          Time: {{ timeLeft }}s
+        </div>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <!-- Display the question -->
+        <h2 class="text-xl font-semibold mb-4" [innerHTML]="currentQuestion?.question"></h2>
+        <!-- Display the answers as buttons -->
+        <div class="grid grid-cols-1 gap-3">
+          <button
+            *ngFor="let answer of allAnswers"
+            (click)="submitAnswer(answer)"
+            class="w-full px-4 py-3 bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200"
+            [innerHTML]="answer">
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Show a message while navigating to results -->
+    <div *ngIf="questions.length > 0 && currentQuestionIndex >= questions.length" class="text-center">
+      <p class="text-lg text-gray-700">Quiz completed! Navigating to results...</p>
+    </div>
+  </div>
+</div>

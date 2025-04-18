@@ -1,7 +1,9 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from '../services/api.service';
+import { Category } from '../shared/category.model';
 
 @Component({
   selector: 'app-home',
@@ -11,24 +13,23 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  private http = inject(HttpClient);
+  private apiService = inject(ApiService);
+  private router = inject(Router);
 
-  categories: Array<any> = [];
-  // par default 
-  selectedCategory: number = 9; 
+  categories: Category[] = [];
+  selectedCategory: number = 9; // Default: General Knowledge
   selectedDifficulty: string = 'medium';
-  numQuestions: number = 10;
-  httpClient: any;
-  quizData: any;
+  numQuestions: number = 10; 
 
   ngOnInit(): void {
     this.fetchCategories();
   }
 
   fetchCategories(): void {
-    this.http.get('https://opentdb.com/api_category.php').subscribe({
-      next: (res: any) => {
+    this.apiService.getCategories().subscribe({
+      next: (res: { trivia_categories: Category[] }) => {
         this.categories = res.trivia_categories;
+        console.log("resultaaaat",res.trivia_categories);
       },
       error: (err) => {
         console.error('Error fetching categories:', err);
@@ -37,28 +38,21 @@ export class HomeComponent implements OnInit {
   }
 
   startQuiz(): void {
-    console.log('Quiz settings:', {
-      category: this.selectedCategory,
-      difficulty: this.selectedDifficulty,
-      numQuestions: this.numQuestions
-    });
-
-    const url = `https://opentdb.com/api.php?amount=${this.numQuestions}&category=${this.selectedCategory}&difficulty=${this.selectedDifficulty}&type=multiple`;
-
-    this.http.get<any>(url).subscribe({
-      next: (res) => {
-        console.log('api url:', url);
-        console.log('quiiz Data:', res);
-        console.log('res.results:', res.results);
-        this.quizData = res.results;
-      },
-      error: (err) => {
-        console.error('api eerror:', err);
-      }
-    });
+    // Check if all inputs are valid
+    if (this.selectedCategory && this.selectedDifficulty && this.numQuestions >= 1 && this.numQuestions <= 50) {
+      // Navigate to the Quiz page with the selected settings
+      this.router.navigate(['/quiz'], {
+        queryParams: {
+          category: this.selectedCategory,
+          difficulty: this.selectedDifficulty,
+          numQuestions: this.numQuestions
+          
+        }
+        
+      });
+    } else {
+      console.error('Please select a category, difficulty, and a valid number of questions (1-50).');
+    }
+    
   }
-
-
-
-  
 }
