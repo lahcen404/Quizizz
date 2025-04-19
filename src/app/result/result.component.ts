@@ -12,7 +12,44 @@ import { Score } from '../shared/score.model';
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.css']
 })
-export class ResultComponent  {
+export class ResultComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  // private storageService = inject(StorageService);
 
- 
+  score: number = 0;
+  totalQuestions: number = 10;
+  category: string = '';
+  difficulty: string = '';
+  timed: boolean = false;
+  username: string = '';
+
+  ngOnInit() {
+    // Get the results from the URL (sent by QuizComponent)
+    this.route.queryParams.subscribe(params => {
+      this.score = +params['score'] || 0;
+      this.totalQuestions = +params['totalQuestions'] ;
+      this.category = params['category'] || 'Unknown';
+      this.difficulty = params['difficulty'] || 'Unknown';
+      this.timed = params['timed'] === 'true';
+    });
+  }
+
+  saveScore() {
+    // Create a score object
+    const score: Score = {
+      username: this.username || 'Anonymous', // Use "Anonymous" if no username
+      score: this.score,
+      category: this.category,
+      difficulty: this.difficulty,
+      date: new Date().toISOString(), // Save the current date
+      timed: this.timed
+    };
+    // this.storageService.saveScore(score); // Save the score
+    this.router.navigate(['/history']); // Go to the History page
+  }
+
+  playAgain() {
+    this.router.navigate(['/']); // Go back to the Home page
+  }
 }
