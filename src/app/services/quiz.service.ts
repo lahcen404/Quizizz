@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { ApiService } from './api.service';
 import { Question } from '../shared/question.model';
 
@@ -6,19 +7,23 @@ import { Question } from '../shared/question.model';
   providedIn: 'root'
 })
 export class QuizService {
-  questions: Question[] = [];
-  currentQuestionIndex: number = 0;
-  score: number = 0;
+  private questionsSubject = new BehaviorSubject<Question[]>([]);
+  questions$ = this.questionsSubject.asObservable();
+
+  private currentQuestionIndexSubject = new BehaviorSubject<number>(0);
+  currentQuestionIndex$ = this.currentQuestionIndexSubject.asObservable();
+
+  private scoreSubject = new BehaviorSubject<number>(0);
+  score$ = this.scoreSubject.asObservable();
 
   constructor(private apiService: ApiService) {}
 
-  // Start a new quiz
   startQuiz(categoryId: number, difficulty: string, numQuestions: number) {
     this.apiService.getQuestions(categoryId, difficulty, numQuestions).subscribe({
       next: (data) => {
-        this.questions = data.results; // Save the questions
-        this.currentQuestionIndex = 0; // Start from the first question
-        this.score = 0; // Reset the score
+        this.questionsSubject.next(data.results || []);
+        this.currentQuestionIndexSubject.next(0);
+        this.scoreSubject.next(0);
       },
       error: (err) => {
         console.error('Error fetching questions:', err);
@@ -26,31 +31,27 @@ export class QuizService {
     });
   }
 
-  // Get the current question
   getCurrentQuestion(): Question | null {
-    if (this.currentQuestionIndex < this.questions.length) {
-      return this.questions[this.currentQuestionIndex];
-    }
-    return null;
+    const questions = this.questionsSubject.getValue();
+    const index = this.currentQuestionIndexSubject.getValue();
+    return questions[index] || null;
   }
 
-  // Submit the answer
   submitAnswer(answer: string, correctAnswer: string) {
     if (answer === correctAnswer) {
-      this.score += 1; // Add 1 to the score
+      this.scoreSubject.next(this.scoreSubject.getValue() + 1);
     }
-    this.nextQuestion(); // Move to next question
+    this.nextQuestion();
   }
 
-  // Go to next question
   nextQuestion() {
-    this.currentQuestionIndex += 1;
+    const nextIndex = this.currentQuestionIndexSubject.getValue() + 1;
+    this.currentQuestionIndexSubject.next(nextIndex);
   }
 
-  // Reset the quiz
   resetQuiz() {
-    this.questions = [];
-    this.currentQuestionIndex = 0;
-    this.score = 0;
+    this.questionsSubject.next([]);
+    this.currentQuestionIndexSubject.next(0);
+    this.scoreSubject.next(0);
   }
 }
