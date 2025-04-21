@@ -1,13 +1,22 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';  
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { StorageService } from '../services/storage.service';
+import { Score } from '../shared/score.model';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [HttpClientModule],
+  imports: [CommonModule, DatePipe],
   templateUrl: './history.component.html',
-  styleUrl: './history.component.css'
+  styleUrls: ['./history.component.css']
 })
-export class HistoryComponent {
+export class HistoryComponent implements OnInit {
+  private storageService = inject(StorageService);
 
+  scores: Score[] = [];
+
+  ngOnInit() {
+    this.scores = this.storageService.getScores(); // Get all saved scores
+  }
 }

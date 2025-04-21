@@ -1,0 +1,39 @@
+<div class="container mx-auto px-4 py-6 min-h-screen">
+    <h1 class="text-3xl font-extrabold text-center text-blue-600 drop-shadow-sm mb-6 animate-bounce">📊 Score History</h1>
+  
+    <div class="w-full max-w-4xl mx-auto bg-white/80 shadow-xl rounded-2xl p-6 backdrop-blur-md border border-white/30 animate-fade-in">
+  
+      <div class="overflow-x-auto rounded-lg">
+        <table class="w-full table-auto text-left bg-white rounded-lg shadow-md">
+          <thead class="sticky top-0 z-10 bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow">
+            <tr>
+              <th class="p-3">👤 Username</th>
+              <th class="p-3">🏆 Score</th>
+              <th class="p-3">📚 Category</th>
+              <th class="p-3">🎯 Difficulty</th>
+              <th class="p-3">📅 Date</th>
+              <th class="p-3">⏱ Mode</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let score of scores"
+                class="border-t hover:bg-blue-50 hover:shadow-md transition duration-200 ease-in-out transform hover:scale-[1.01]">
+              <td class="p-3 font-medium text-gray-700">{{ score.username }}</td>
+              <td class="p-3 font-bold text-green-600">{{ score.score }}</td>
+              <td class="p-3">{{ score.category }}</td>
+              <td class="p-3 capitalize">{{ score.difficulty }}</td>
+              <td class="p-3 text-gray-600">{{ score.date | date:'short' }}</td>
+              <td class="p-3">{{ score.timed ? '⏱ Timed' : '🧘 Normal' }}</td>
+            </tr>
+  
+            <tr *ngIf="scores.length === 0">
+              <td colspan="6" class="p-6 text-center text-gray-500 italic">
+                😔 No scores available.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

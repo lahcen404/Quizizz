@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-// import { StorageService } from '../services/storage.service';
+import { StorageService } from '../services/storage.service';
 import { Score } from '../shared/score.model';
 
 @Component({
@@ -44,7 +44,7 @@ export class ResultComponent implements OnInit {
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  // private storageService = inject(StorageService);
+   private storageService = inject(StorageService);
 
   score: number = 0;
   totalQuestions: number = 10;
@@ -75,7 +75,7 @@ export class ResultComponent implements OnInit {
       date: new Date().toISOString(), // Save the current date
       timed: this.timed
     };
-    // this.storageService.saveScore(score); // Save the score
+     this.storageService.saveScore(score); // Save the score
     this.router.navigate(['/history']); // Go to the History page
   }
 
